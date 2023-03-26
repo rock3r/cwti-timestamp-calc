@@ -19,15 +19,16 @@
 
       <div class="col-lg-8 px-0">
         <div class="card">
-          <div class="hstack gap-3 card-body">
-            <input type="date" id="selectedDate" class="form-control" />
-            <input
-              type="button"
-              onClick="handleSubmit(event)"
-              value="Generate"
-              id="generateButton"
-              class="btn btn-primary"
-            />
+          <div class="vstack gap-3 card-body">
+            <input type="date" id="datePicker" class="form-control" />
+            <div
+              class="alert alert-warning"
+              role="alert"
+              style="display: none"
+              id="dateWarning"
+            >
+              The day you selected is not a Wednesday!
+            </div>
           </div>
         </div>
       </div>
