@@ -4,6 +4,8 @@ const datePicker = document.getElementById('datePicker');
 const streamTimeSpan = document.getElementById('streamTime');
 const vodTimeSpan = document.getElementById('vodTime');
 const dateWarning = document.getElementById('dateWarning');
+const copyVod = document.getElementById('copyVod');
+const copyStream = document.getElementById('copyStream');
 
 datePicker.addEventListener('change', (event) => {
   const newDateValue = event.target.value;
@@ -17,6 +19,13 @@ console.log('Next wednesday is:', nextWednesday);
 datePicker.value = nextWednesday.toISODate();
 updateTimestamps();
 validateSelectedDate(nextWednesday);
+
+navigator.permissions.query({ name: 'clipboard-write' }).then((result) => {
+  updateCopyLinks(result.state);
+  result.addEventListener('change', () => {
+    updateCopyLinks(result.state);
+  });
+});
 
 function getNextWednesday() {
   const now = DateTime.local();
@@ -75,4 +84,27 @@ function formatTimestamp(dateTime) {
 
 function fixEuropeanZoneName(timestamp) {
   return timestamp.replace('GMT+2', 'CEST').replace('GMT+1', 'CET');
+}
+
+function copyToClipboard(target) {
+  const textToCopy = document.getElementById(target).innerText;
+  navigator.clipboard.writeText(textToCopy).then(
+    function () {
+      console.log('Text copied to clipboard');
+    },
+    function () {
+      console.error('Failed to copy text to clipboard');
+    }
+  );
+}
+
+function updateCopyLinks(permissionState) {
+  console.log('Clipboard permission state:', permissionState);
+  if (permissionState === 'denied') {
+    copyStream.classList.add('disabled');
+    copyVod.classList.add('disabled');
+  } else {
+    copyStream.classList.remove('disabled');
+    copyVod.classList.remove('disabled');
+  }
 }
