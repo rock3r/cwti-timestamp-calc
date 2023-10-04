@@ -1,9 +1,9 @@
 {
   "name": "cwti-timestamp-calc",
   "description": "Calculate timestamps for CWTI streams and VOD.",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "private": true,
-  "repository": "twbs/examples",
+  "repository": "https://github.com/rock3r/cwti-timestamp-calc",
   "license": "MIT",
   "stackblitz": {
     "startCommand": "npm start"
